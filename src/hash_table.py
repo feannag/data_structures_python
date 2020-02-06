@@ -35,6 +35,20 @@ class HashTable:
 
         return False
 
+    def __get_index(self, item):
+        index = hash(item) % len(self.items)
+
+        while self.items[index] is not None:
+            if self.items[index] == item:
+                return index
+
+            index = (index + 1) % len(self.items)
+
+    def remove(self, item):
+        if self.contains(item):
+            self.items[self.__get_index(item)] = None
+            self.number_of_items -= 1
+
     def add(self, item):
         load_factor = self.number_of_items / len(self.items)
         if load_factor <= self.max_load_factor:
@@ -69,6 +83,8 @@ def main():
             print(f"hashtable contains {item}")
         else:
             print(f"hashtable doesn't contains {item}")
+
+    hs.remove('zulu')
 
 
 if __name__ == "__main__":
